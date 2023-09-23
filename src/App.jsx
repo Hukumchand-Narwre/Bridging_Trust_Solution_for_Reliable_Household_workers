@@ -1,7 +1,8 @@
+import "./App.css";
 function App() {
   return (
     <>
-      <h1>Major project started</h1>
+      <h1>Major project started repository set up done</h1>
     </>
   );
 }
