@@ -1,0 +1,14 @@
+.header{
+    height: 237px;
+    width: 2665px;
+}
+.header.headerBox{
+        background-color: #fe6007;
+        height: 237px;
+        left: 100;
+        position: fixed;
+        top: 0;
+        width: 2665px;
+
+        
+}

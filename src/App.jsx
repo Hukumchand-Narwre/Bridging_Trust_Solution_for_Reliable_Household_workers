@@ -1,10 +1,10 @@
 import "./App.css";
+import AdminCardScreen from "./screen/AdminCardScreen";
 function App() {
   return (
-    <>
-      <h1>Major project started repository for testing</h1>
-    </>
+    <AdminCardScreen/>
   );
 }
+
 
 export default App;
