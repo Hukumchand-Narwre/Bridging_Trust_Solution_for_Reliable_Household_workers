@@ -1,10 +1,9 @@
-import "./App.css";
-import AdminCardScreen from "./screen/AdminCardScreen";
-function App() {
-  return (
-    <AdminCardScreen/>
-  );
-}
+import ROUTES, { RenderRoutes } from "./routes/Routes";
 
+import "./App.css";
+
+function App() {
+  return <RenderRoutes routes={ROUTES} token={""} />;
+}
 
 export default App;
