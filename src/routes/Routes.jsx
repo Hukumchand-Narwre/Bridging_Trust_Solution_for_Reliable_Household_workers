@@ -3,13 +3,14 @@ import { Switch, Route } from "react-router-dom";
 import PrivateRoutes from "./PrivateRoutes";
 import PublicRoutes from "./PublicRoutes";
 import HomeScreen from "../screen/HomeScreen";
-import LoginScreen from "../screen/LoginScreen";
+import LoginScreen from "../screen/LoginScreen/LoginScreen";
+import UserCard from "../components/UserCard/UserCard";
 
 const ROUTES = [
   {
     path: "/",
     key: "HomeScreen",
-    component: HomeScreen,
+    component: UserCard,
     isPrivate: false,
     exact: true,
   },
