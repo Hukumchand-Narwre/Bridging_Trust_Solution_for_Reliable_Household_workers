@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Login from "../../components/Login/Login";
 import Logo from "../../UI/Logo";
 import Spinner from "../../UI/Spinner";
+import Divider from "../../UI/Divider";
 
 const LoginLayout = styled.main`
   min-height: 92vh;

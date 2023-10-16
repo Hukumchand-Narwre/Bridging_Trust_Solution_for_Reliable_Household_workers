@@ -4,7 +4,7 @@ const StyledFormRow = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
-  padding: 1.2rem 0;
+  padding: ${(props) => `${props.verticalPadding} 0`};
 `;
 
 const Label = styled.label`
@@ -16,9 +16,9 @@ const Error = styled.span`
   color: #b91c1c;
 `;
 
-function FormRowVertical({ label, error, children }) {
+function FormRowVertical({ label, error, children, verticalPadding = "1.24rem" }) {
   return (
-    <StyledFormRow>
+    <StyledFormRow verticalPadding={verticalPadding}>
       {label && <Label htmlFor={children.props.id}>{label}</Label>}
       {children}
       {error && <Error>{error}</Error>}

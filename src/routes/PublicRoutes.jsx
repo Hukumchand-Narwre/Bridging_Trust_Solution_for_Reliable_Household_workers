@@ -1,8 +1,10 @@
 import { Route, Redirect } from "react-router-dom";
 
 import Layout from "../containers/Layout";
+import { useAuthStore } from "../store/Auth";
 
 const PublicRoutes = ({ component: Component, isLoggedIn, ...rest }) => {
+  const { userinfo } = useAuthStore();
   return (
     <Route
       {...rest}
@@ -12,7 +14,7 @@ const PublicRoutes = ({ component: Component, isLoggedIn, ...rest }) => {
             <Component {...props} />
           </Layout>
         ) : (
-          <Redirect from={props.match.path} to="/" exact />
+          <Redirect from={props.match.path} to={`/${userinfo.role}`} exact />
         );
       }}
     />

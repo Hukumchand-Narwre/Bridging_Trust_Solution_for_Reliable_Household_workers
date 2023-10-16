@@ -7,7 +7,7 @@ const StyledLogo = styled.div`
 
 const Img = styled.img`
   width: 50%;
-  aspect-ratio: 12/10;
+  aspect-ratio: 4/3;
   mix-blend-mode: darken;
   margin-left: auto;
   margin-right: auto;
