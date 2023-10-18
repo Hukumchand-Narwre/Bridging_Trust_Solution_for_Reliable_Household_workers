@@ -1,23 +1,18 @@
 import styled from "styled-components";
 
 const StyledFormRow = styled.div`
+  flex-basis: 50%;
+  flex: 1;
+  margin-bottom: 2rem;
   display: grid;
   align-items: center;
-  grid-template-columns: 24rem 1fr 1.2fr;
-  gap: 2.4rem;
-
-  padding: 1.2rem 0;
-
+  grid-template-columns: 1.6 2fr;
   &:first-child {
     padding-top: 0;
   }
 
   &:last-child {
     padding-bottom: 0;
-  }
-
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--color-grey-100);
   }
 
   &:has(button) {
@@ -29,6 +24,7 @@ const StyledFormRow = styled.div`
 
 const Label = styled.label`
   font-weight: 500;
+  margin-bottom: 0.5rem;
 `;
 
 const Error = styled.span`

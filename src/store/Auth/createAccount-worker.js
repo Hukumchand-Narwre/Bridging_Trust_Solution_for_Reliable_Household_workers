@@ -8,13 +8,17 @@ const defaultValues = {
   address: "",
   dob: "",
   bank_acc_no: "",
-  gender: "",
+  gender: "Male",
   available_Days: null,
   available_Hours: null,
-  preferred_work: "",
-  type_of_work: "",
+  preferred_work: "Part-Time",
+  type_of_work: "Gardening",
   salary: null,
   hash_password: "",
+  pincode: "",
+  isLoading: false,
+  success: null,
+  error: null,
 };
 
 export const createWorkerStore = create((set) => ({
@@ -35,7 +39,11 @@ export const createWorkerStore = create((set) => ({
   type_of_work: defaultValues.type_of_work,
   salary: defaultValues.salary,
   hash_password: defaultValues.hash_password,
-  setDefault: () => {
+  pincode: defaultValues.pincode,
+  isLoading: defaultValues.isLoading,
+  success: defaultValues.success,
+  error: defaultValues.error,
+  setDefaults: () => {
     set(defaultValues);
   },
   setEmail: (email) => {
@@ -88,5 +96,17 @@ export const createWorkerStore = create((set) => ({
   },
   setHash_password: (hash_password) => {
     set({ hash_password });
+  },
+  setPincode: (pincode) => {
+    set({ pincode });
+  },
+  setisLoading: (isLoading) => {
+    set({ isLoading });
+  },
+  setSuccess: (success) => {
+    set({ success });
+  },
+  setError: (error) => {
+    set({ error });
   },
 }));

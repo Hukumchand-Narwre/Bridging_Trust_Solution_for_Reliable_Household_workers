@@ -6,6 +6,10 @@ const defaultValues = {
   state: "",
   address: "",
   hash_password: "",
+  isLoading: false,
+  success: null,
+  error: null,
+  pincode: "",
 };
 
 export const createUserStore = create((set) => ({
@@ -15,7 +19,10 @@ export const createUserStore = create((set) => ({
   state: defaultValues.state,
   address: defaultValues.address,
   hash_password: defaultValues.hash_password,
-  role: defaultValues.role,
+  isLoading: defaultValues.isLoading,
+  success: defaultValues.success,
+  error: defaultValues.error,
+  pincode: defaultValues.pincode,
   setDefault: () => {
     set(defaultValues);
   },
@@ -60,5 +67,17 @@ export const createUserStore = create((set) => ({
   },
   setHash_password: (hash_password) => {
     set({ hash_password });
+  },
+  setisLoading: (isLoading) => {
+    set({ isLoading });
+  },
+  setSuccess: (success) => {
+    set({ success });
+  },
+  setError: (error) => {
+    set({ error });
+  },
+  setPincode: (pincode) => {
+    set({ pincode });
   },
 }));

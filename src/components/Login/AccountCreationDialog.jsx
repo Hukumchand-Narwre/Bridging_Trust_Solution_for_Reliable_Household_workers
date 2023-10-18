@@ -1,11 +1,9 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import FormRowVertical from "../../UI/FormRowVertical";
 import Input from "../../UI/Input";
-import Form from "../../UI/Form";
 import Button from "../../UI/Button";
 
 import { Dropdown } from "../../UI/Dropdown";
@@ -21,10 +19,14 @@ function AccountCreationDialog({ isOpen, onClose }) {
     // Handle form submission here, e.g., send data to the server
     // You can access the firstName, lastName, and mobileNo state values here
     e.preventDefault();
-    console.log(role);
-    // Close the dialog
-    onClose();
-    history.push(`/create-account/${role}`);
+    if (!first_name && !last_name && !phone_number && !role) {
+      alert("All Fields are Required");
+    } else {
+      console.log(role);
+      // Close the dialog
+      onClose();
+      history.push(`/create-account/${role}`);
+    }
   };
 
   return (
