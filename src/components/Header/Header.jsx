@@ -1,11 +1,22 @@
 import { useEffect, useState } from "react";
 
+import { Link } from "react-router-dom";
+
 const Header = () => {
   return (
     <header>
-      <div className=" flex-col md:flex-row items-center p-2 bg-gray-500/10 rounded-b-2xl ">
-        <div>A</div>
-        <div>A</div>
+      <div className=" flex justify-between items-center p-4 px-6 bg-gray-500/10 rounded-b-2xl ">
+        <div className="flex items-center  ">
+          <img src="../../../public/Logo.jpeg" className="h-16 mr-4 " style={{ mixBlendMode: "darken" }} />
+          <p className=" font-semibold ">A.P.Trading</p>
+        </div>
+        <div className="flex font-semibold">
+          <Link to="/" className="mr-6 ">
+            Home
+          </Link>
+
+          <Link to="/Login">SignIN</Link>
+        </div>
       </div>
     </header>
   );
