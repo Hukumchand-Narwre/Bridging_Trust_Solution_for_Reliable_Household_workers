@@ -29,7 +29,8 @@ const Login = () => {
       const { first_name, role, token, id } = data.data.data;
       setToken(token);
       setUserInfo({ first_name, role, id });
-      history.push(`/Admin`);
+      console.log(role);
+      history.push(`/${role}`);
       console.log("run");
     } catch (error) {
       console.log(error);

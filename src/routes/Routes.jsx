@@ -4,12 +4,27 @@ import PrivateRoutes from "./PrivateRoutes";
 import PublicRoutes from "./PublicRoutes";
 import HomeScreen from "../screen/HomeScreen";
 import LoginScreen from "../screen/LoginScreen/LoginScreen";
-import UserCard from "../components/UserCard/UserCard";
 import EmployeeCreateAccount from "../screen/createAccount/EmployeeCreateAccount";
 import EmployerCreateAccount from "../screen/createAccount/EmployerCreateAccount";
 import AdminScreen from "../screen/AdminScreen/AdminScreen";
+import WorkerScreen from "../screen/WorkerScreen/WorkerScreen";
+import { UserScreen } from "../screen/UserScreen/UserScreen";
 
 const ROUTES = [
+  {
+    path: "/User",
+    key: "UserScreen",
+    component: UserScreen,
+    isPrivate: true,
+    exact: true,
+  },
+  {
+    path: "/Worker",
+    key: "EmployeeScreen",
+    component: WorkerScreen,
+    isPrivate: true,
+    exact: true,
+  },
   {
     path: "/Admin",
     key: "AdminScreen",
