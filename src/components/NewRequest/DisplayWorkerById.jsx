@@ -1,94 +1,65 @@
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useAuthStore } from "../../store/Auth";
+import { getPendingWorkerByIdApi, updateWorkerStatus } from "../../api/apiInstance";
+
 import Fade from "react-reveal/Fade";
 import Slide from "react-reveal/Fade";
-import { createWorkerStore } from "../../store/Auth/createAccount-worker";
+
 import Button from "../../UI/Button";
 import Input from "../../UI/Input";
 
 import FormRow from "../../UI/FormRow";
-import classes from "./EmployeeCreateAccount.module.css";
+import classes from "../../screen/createAccount/EmployeeCreateAccount.module.css";
 
 import Heading from "../../UI/Heading";
-import { useCommonDetailStore } from "../../store/Auth/common-Detail";
-import { createAccountApi } from "../../api/apiInstance";
+
 import Loader from "../../UI/PageLoader";
 import Modal from "../../UI/Modal";
 
-const EmployeeCreateAccount = () => {
-  const {
-    email,
-    aadhar_number,
-    city,
-    state,
-    address,
-    dob,
-    bank_acc_no,
-    gender,
-    available_Days,
-    available_Hours,
-    preferred_work,
-    type_of_work,
-    salary,
-    hash_password,
-    setEmail,
-    setAadhar_number,
-    setCity,
-    setState,
-    setAddress,
-    setDob,
-    setBank_acc_no,
-    setGender,
-    setAvailable_Days,
-    setAvailable_Hours,
-    setPreferred_work,
-    setType_of_work,
-    setSalary,
-    setHash_password,
-    pincode,
-    setPincode,
-    isLoading,
-    setisLoading,
-    success,
-    setSuccess,
-  } = createWorkerStore();
-  const { first_name, last_name, phone_number } = useCommonDetailStore();
-
-  const handleWorkerCreateAccount = async () => {
-    const data = {
-      email,
-      phone_number,
-      last_name,
-      first_name,
-      aadhar_number,
-      city,
-      state,
-      address,
-      dob,
-      bank_acc_no,
-      gender,
-      available_Days,
-      available_Hours,
-      preferred_work,
-      type_of_work,
-      salary,
-      hash_password,
-      role: "Worker",
-      pincode,
-    };
-    console.log(data);
+const DisplayWorkerById = () => {
+  const { token } = useAuthStore();
+  const [worker, setWorker] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const history = useHistory();
+  useEffect(() => {
+    const currentUrl = window.location.href;
+    const id = currentUrl.split("/").at(-1);
     try {
-      setisLoading(true);
-      await createAccountApi(data);
-      setSuccess("success");
-    } catch (err) {
-      alert("something went wrong");
-    }
-    setisLoading(false);
-  };
+      // eslint-disable-next-line no-inner-declarations
+      async function getPendingWorkers() {
+        setIsLoading(true);
+        const worker = await getPendingWorkerByIdApi(token, id);
 
+        setWorker(worker.data.data[0]);
+        setIsLoading(false);
+      }
+      getPendingWorkers();
+    } catch (err) {
+      alert("Something went wrong");
+    }
+  }, []);
+  const handleApprove = () => {
+    const currentUrl = window.location.href;
+    const id = currentUrl.split("/").at(-1);
+    try {
+      // eslint-disable-next-line no-inner-declarations
+      async function approveWorker() {
+        setIsLoading(true);
+        const worker = await updateWorkerStatus(token, id);
+        setIsLoading(false);
+        alert("Approved Succesfully");
+        history.push("/Admin");
+      }
+      approveWorker();
+    } catch (error) {
+      alert("Something went wrong");
+    }
+  };
   return (
     <>
       <Slide bottom delay={200}>
-        <div className={classes.container}>
+        <div style={{ width: 1000 }} className={classes.container}>
           <Heading as="h3" className={classes.subHeading}>
             Personal Information
           </Heading>
@@ -99,18 +70,31 @@ const EmployeeCreateAccount = () => {
                 placeholder="FirstName"
                 id="FirstName"
                 className="w-5/6 "
-                value={first_name}
+                value={worker.first_name}
                 disabled
               />
             </FormRow>
 
             <FormRow label="Last Name">
-              <Input type="text" placeholder="LastName" id="LastName" className="w-5/6" value={last_name} disabled />
+              <Input
+                type="text"
+                placeholder="LastName"
+                id="LastName"
+                className="w-5/6"
+                value={worker.last_name}
+                disabled
+              />
             </FormRow>
           </div>
           <div className="flex items-center justify-center">
             <FormRow label="Mobile Number">
-              <Input placeholder="Phone Number" id="PhoneNumber" className="w-5/6 " value={phone_number} disabled />
+              <Input
+                placeholder="Phone Number"
+                id="PhoneNumber"
+                className="w-5/6 "
+                value={worker.phone_number}
+                disabled
+              />
             </FormRow>
             <FormRow label="Adhar Number">
               <Input
@@ -120,8 +104,8 @@ const EmployeeCreateAccount = () => {
                 min="12"
                 max="12"
                 className="w-5/6"
-                value={aadhar_number}
-                onChange={(e) => setAadhar_number(e.target.value)}
+                value={worker.aadhar_number}
+                disabled
               />
             </FormRow>
           </div>
@@ -133,8 +117,8 @@ const EmployeeCreateAccount = () => {
                 placeholder="Date Of Birth"
                 id="Date Of Birth"
                 className="w-5/6"
-                value={dob}
-                onChange={(e) => setDob(e.target.value)}
+                value={worker.dob}
+                disabled
               />
             </FormRow>
             <FormRow label="Choose Gender">
@@ -150,8 +134,8 @@ const EmployeeCreateAccount = () => {
                   boxShadow: "0 1px 2px rgba(0, 0, 0, 0.04)",
                 }}
                 className="w-5/6"
-                value={gender}
-                onChange={(e) => setGender(e.target.value)}
+                value={worker.gender}
+                disabled
               >
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -162,40 +146,21 @@ const EmployeeCreateAccount = () => {
         </div>
       </Slide>
       <Slide bottom delay={200}>
-        <div className={classes.container}>
+        <div style={{ width: 1000 }} className={classes.container}>
           <Heading as="h3" className={classes.subHeading}>
             Address
           </Heading>
           <div className="flex items-center justify-center">
             <FormRow label="City">
-              <Input
-                placeholder="City"
-                id="City"
-                className="w-5/6 "
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-              />
+              <Input placeholder="City" id="City" className="w-5/6 " value={worker.city} disabled />
             </FormRow>
             <FormRow label="State">
-              <Input
-                type="text"
-                placeholder="State"
-                id="state"
-                className="w-5/6 "
-                value={state}
-                onChange={(e) => setState(e.target.value)}
-              />
+              <Input type="text" placeholder="State" id="state" className="w-5/6 " value={worker.state} disabled />
             </FormRow>
           </div>
           <div className="flex items-center justify-center">
             <FormRow label="Address">
-              <Input
-                placeholder="Address"
-                id="Address"
-                className="w-5/6 "
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-              />
+              <Input placeholder="Address" id="Address" className="w-5/6 " value={worker.address} disabled />
             </FormRow>
             <FormRow label="Pincode">
               <Input
@@ -203,36 +168,8 @@ const EmployeeCreateAccount = () => {
                 placeholder="Pincode"
                 id="pincode"
                 className="w-5/6 "
-                value={pincode}
-                onChange={(e) => setPincode(e.target.value)}
-              />
-            </FormRow>
-          </div>
-        </div>
-      </Slide>
-      <Slide bottom delay={200}>
-        <div className={classes.container}>
-          <Heading as="h3" className={classes.subHeading}>
-            Login Information
-          </Heading>
-          <div className="flex items-center justify-center">
-            <FormRow label="Email address">
-              <Input
-                placeholder="Email"
-                id="email"
-                className="w-5/6 "
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </FormRow>
-            <FormRow label="Set Password">
-              <Input
-                type="password"
-                placeholder="Set Password"
-                id="Set_Password"
-                className="w-5/6 "
-                value={hash_password}
-                onChange={(e) => setHash_password(e.target.value)}
+                value={worker.pincode}
+                disabled
               />
             </FormRow>
           </div>
@@ -240,9 +177,9 @@ const EmployeeCreateAccount = () => {
       </Slide>
 
       <Slide bottom delay={200}>
-        <div className={classes.container}>
+        <div style={{ width: 1000 }} className={classes.container}>
           <Heading as="h3" className={classes.subHeading}>
-            Add Work Information
+            Work Information
           </Heading>
           <div className="flex items-center justify-center">
             <FormRow label="Preferred Works">
@@ -258,8 +195,8 @@ const EmployeeCreateAccount = () => {
                   boxShadow: "0 1px 2px rgba(0, 0, 0, 0.04)",
                 }}
                 className="w-5/6 "
-                value={preferred_work}
-                onChange={(e) => setPreferred_work(e.target.value)}
+                value={worker.preferred_work}
+                disabled
               >
                 <option value="part-time">Part-Time</option>
                 <option value="Full-Time">Full-Time</option>
@@ -272,8 +209,8 @@ const EmployeeCreateAccount = () => {
                 id="Sunday"
                 name="Sunday"
                 className="w-5/6 "
-                value={available_Days}
-                onChange={(e) => setAvailable_Days(e.target.value)}
+                value={worker.available_Days}
+                disabled
               />
             </FormRow>
           </div>
@@ -284,8 +221,8 @@ const EmployeeCreateAccount = () => {
                 placeholder="Available Days"
                 id="time"
                 className="w-5/6 "
-                value={available_Hours}
-                onChange={(e) => setAvailable_Hours(e.target.value)}
+                value={worker.available_Hours}
+                disabled
               />
             </FormRow>
             <FormRow label="Type of Work">
@@ -301,8 +238,8 @@ const EmployeeCreateAccount = () => {
                   boxShadow: "0 1px 2px rgba(0, 0, 0, 0.04)",
                 }}
                 className="w-5/6 "
-                value={type_of_work}
-                onChange={(e) => setType_of_work(e.target.value)}
+                value={worker.type_of_work}
+                disabled
               >
                 <option value="Gardening">Gardening</option>
                 <option value="Cleaning">Cleaning</option>
@@ -316,9 +253,9 @@ const EmployeeCreateAccount = () => {
       </Slide>
 
       <Fade bottom>
-        <div className={classes.container}>
+        <div style={{ width: 1000 }} className={classes.container}>
           <Heading as="h3" className={classes.subHeading}>
-            Employee Bank Details
+            Bank Details
           </Heading>
           <div className="flex items-center justify-center">
             <FormRow label="Account Number">
@@ -329,19 +266,12 @@ const EmployeeCreateAccount = () => {
                 min="4"
                 max="18"
                 className="w-5/6 "
-                value={bank_acc_no}
-                onChange={(e) => setBank_acc_no(e.target.value)}
+                value={worker.bank_acc_no}
+                disabled
               />
             </FormRow>
             <FormRow label="Salary">
-              <Input
-                type="number"
-                placeholder="Salary"
-                id="Salary"
-                className="w-5/6 "
-                value={salary}
-                onChange={(e) => setSalary(e.target.value)}
-              />
+              <Input type="number" placeholder="Salary" id="Salary" className="w-5/6 " value={worker.salary} disabled />
             </FormRow>
           </div>
         </div>
@@ -349,15 +279,15 @@ const EmployeeCreateAccount = () => {
 
       <Fade bottom>
         <div className="text-center w-full">
-          <Button className="w-3/12" style={{ margin: "2rem" }} onClick={handleWorkerCreateAccount}>
-            Create Account
+          <Button className="w-3/12" style={{ margin: "2rem" }} onClick={handleApprove}>
+            Approve Request
           </Button>
         </div>
       </Fade>
       {isLoading && <Loader />}
-      {success && <Modal />}
+      {/* {success && <Modal />} */}
     </>
   );
 };
 
-export default EmployeeCreateAccount;
+export default DisplayWorkerById;

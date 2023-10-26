@@ -9,8 +9,32 @@ import EmployerCreateAccount from "../screen/createAccount/EmployerCreateAccount
 import AdminScreen from "../screen/AdminScreen/AdminScreen";
 import WorkerScreen from "../screen/WorkerScreen/WorkerScreen";
 import { UserScreen } from "../screen/UserScreen/UserScreen";
+import NewRequest from "../components/NewRequest/NewRequest";
+import DisplayWorkerById from "../components/NewRequest/DisplayWorkerById";
+import UserAccount from "../screen/UserScreen/UserAccount";
 
 const ROUTES = [
+  {
+    path: `/User/user-detail`,
+    key: "user",
+    component: UserAccount,
+    isPrivate: true,
+    exact: true,
+  },
+  {
+    path: `/Admin/NewRequest/:id`,
+    key: "pendingworker",
+    component: DisplayWorkerById,
+    isPrivate: true,
+    exact: true,
+  },
+  {
+    path: "/Admin/NewRequest",
+    key: "NewRequest",
+    component: NewRequest,
+    isPrivate: true,
+    exact: true,
+  },
   {
     path: "/User",
     key: "UserScreen",

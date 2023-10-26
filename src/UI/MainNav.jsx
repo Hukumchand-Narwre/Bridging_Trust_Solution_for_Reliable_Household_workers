@@ -7,6 +7,7 @@ import {
   HiOutlineHomeModern,
   HiOutlineUsers,
 } from "react-icons/hi2";
+import { useAuthStore } from "../store/Auth";
 
 const NavList = styled.ul`
   display: flex;
@@ -15,8 +16,7 @@ const NavList = styled.ul`
 `;
 
 const StyledNavLink = styled(NavLink)`
-  &:link,
-  &:visited {
+  &:link {
     display: flex;
     align-items: center;
     gap: 1.2rem;
@@ -32,8 +32,8 @@ const StyledNavLink = styled(NavLink)`
   &:hover,
   &:active,
   &.active:link,
-  &.active:visited {
-    color: #f3f4f6;
+  &.active {
+    color: black;
     background-color: #f9fafb;
     border-radius: 5px;
   }
@@ -54,40 +54,70 @@ const StyledNavLink = styled(NavLink)`
 `;
 
 function MainNav() {
-  return (
-    <nav>
-      <NavList>
+  const { user: users, setToken } = useAuthStore();
+  const currentUrl = window.location.href;
+  const admin = currentUrl.split("/").includes("Admin");
+  const user = currentUrl.split("/").includes("User");
+  let displayNav;
+  if (admin) {
+    displayNav = (
+      <>
         <li>
-          <StyledNavLink to="/dashboard">
+          <StyledNavLink to="/Admin">
             <HiOutlineHome />
             <span>Home</span>
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/bookings">
+          <StyledNavLink to="/Admin/NewRequest">
             <HiOutlineCalendarDays />
-            <span>Bookings</span>
+            <span>New Request</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/cabins">
             <HiOutlineHomeModern />
-            <span>Cabins</span>
+            <span>Holidays</span>
           </StyledNavLink>
         </li>
+
         <li>
-          <StyledNavLink to="/users">
-            <HiOutlineUsers />
-            <span>Users</span>
-          </StyledNavLink>
-        </li>
-        <li>
-          <StyledNavLink to="/settings">
+          <StyledNavLink to="/Login">
             <HiOutlineCog6Tooth />
-            <span>Settings</span>
+            <span onClick={() => setToken(null)}>Log Out</span>
           </StyledNavLink>
         </li>
-      </NavList>
+      </>
+    );
+  }
+  if (user) {
+    displayNav = (
+      <>
+        <li>
+          <StyledNavLink to="/User">
+            <HiOutlineHome />
+            <span>Home</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to="/User/user-detail">
+            <HiOutlineHomeModern />
+            <span>Your Account</span>
+          </StyledNavLink>
+        </li>
+
+        <li>
+          <StyledNavLink to="/">
+            <HiOutlineCog6Tooth />
+            <span onClick={() => setToken(null)}>Log Out</span>
+          </StyledNavLink>
+        </li>
+      </>
+    );
+  }
+  return (
+    <nav>
+      <NavList>{displayNav}</NavList>
     </nav>
   );
 }

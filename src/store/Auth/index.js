@@ -4,6 +4,7 @@ const defaultValues = {
   token: null,
   userInfo: null,
   isLoading: false,
+  user: null,
 };
 
 export const useAuthStore = create((set) => ({
@@ -11,7 +12,7 @@ export const useAuthStore = create((set) => ({
   userInfo: defaultValues.userInfo,
   isLoading: defaultValues.isLoading,
   setDefault: () => {
-    set(defaultValues);
+    set({ defaultValues });
   },
   setToken: (token) => {
     set({ token });
@@ -21,5 +22,8 @@ export const useAuthStore = create((set) => ({
   },
   setisLoading: (isLoading) => {
     set({ isLoading });
+  },
+  setUser: (user) => {
+    set({ user });
   },
 }));

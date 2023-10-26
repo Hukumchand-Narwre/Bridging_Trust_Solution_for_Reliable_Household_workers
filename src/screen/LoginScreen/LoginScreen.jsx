@@ -4,6 +4,8 @@ import Login from "../../components/Login/Login";
 import Logo from "../../UI/Logo";
 import Spinner from "../../UI/Spinner";
 import Divider from "../../UI/Divider";
+import { useAuthStore } from "../../store/Auth";
+import { useEffect } from "react";
 
 const LoginLayout = styled.main`
   min-height: 92vh;

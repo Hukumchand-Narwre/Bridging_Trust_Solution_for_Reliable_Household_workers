@@ -20,3 +20,8 @@ body {
 html {
   font-size: 62.5%;
 }
+
+input:disabled {
+  background-color: #e5e7eb;
+  color: #6b7280;
+}

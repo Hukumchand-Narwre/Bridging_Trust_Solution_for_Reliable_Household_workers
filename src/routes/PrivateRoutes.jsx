@@ -1,9 +1,7 @@
 import { Route, Redirect } from "react-router-dom";
 
-import Layout from "../containers/Layout";
 import Sidebar from "../UI/Sidebar";
 import styled from "styled-components";
-import Header from "../components/Header/Header";
 
 const StyledAppLayout = styled.div`
   display: grid;
@@ -20,9 +18,7 @@ const Main = styled.main`
 
 const Container = styled.div`
   max-width: 120rem;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
+  padding: 2rem 3rem;
   gap: 3.2rem;
 `;
 

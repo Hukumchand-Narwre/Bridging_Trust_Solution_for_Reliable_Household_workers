@@ -5,6 +5,7 @@ import { useAuthStore } from "../store/Auth";
 
 const PublicRoutes = ({ component: Component, isLoggedIn, ...rest }) => {
   const { userinfo } = useAuthStore();
+  console.log(isLoggedIn);
   return (
     <Route
       {...rest}

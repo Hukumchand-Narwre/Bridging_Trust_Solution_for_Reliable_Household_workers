@@ -4,7 +4,11 @@ import { useHistory } from "react-router-dom";
 import { useCommonDetailStore } from "../store/Auth/common-Detail";
 import { createWorkerStore } from "../store/Auth/createAccount-worker";
 
-export default function Modal() {
+export default function Modal({
+  msg = "Your has successfully submitted the application. We will verify all of the details submitted byyou",
+  Heading = "Account Created successfully",
+  route = "/LogIn",
+}) {
   let [isOpen, setIsOpen] = useState(true);
   const history = useHistory();
   const { setDefault } = useCommonDetailStore();
@@ -13,7 +17,7 @@ export default function Modal() {
     setIsOpen(false);
     setDefault();
     setDefaults();
-    history.push("/LogIn");
+    history.push(route);
   }
 
   function openModal() {
@@ -59,13 +63,10 @@ export default function Modal() {
               >
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title as="h2" className="text-2xl font-medium leading-6 text-gray-900">
-                    Account Created successfully
+                    {Heading}
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-lg text-gray-500">
-                      Your has successfully submitted the application. We will verify all of the details submitted by
-                      you.
-                    </p>
+                    <p className="text-lg text-gray-500">{msg}</p>
                   </div>
 
                   <div className="mt-4">

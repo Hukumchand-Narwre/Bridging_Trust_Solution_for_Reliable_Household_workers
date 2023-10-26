@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Form from "../../UI/Form";
 import FormRowVertical from "../../UI/FormRowVertical";
@@ -15,7 +15,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const { isLoading, setisLoading, setToken, setUserInfo } = useAuthStore();
+  const { isLoading, setisLoading, setToken, setUserInfo, setUser } = useAuthStore();
   const history = useHistory();
 
   async function handleSubmit(e) {
@@ -26,6 +26,7 @@ const Login = () => {
     try {
       const data = await loginApi({ email, password });
       console.log(data.data.data);
+      setUser(data.data.data);
       const { first_name, role, token, id } = data.data.data;
       setToken(token);
       setUserInfo({ first_name, role, id });
