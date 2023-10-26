@@ -5,7 +5,7 @@ import Button from "../../UI/Button";
 import Loader from "../../UI/PageLoader";
 import { useHistory } from "react-router-dom";
 import Modal from "../../UI/Modal";
-
+import Image from "../../assets/Logo.jpeg";
 const NewRequest = () => {
   const { token } = useAuthStore();
   const [workerList, setWorkerList] = useState([]);
@@ -35,7 +35,7 @@ const NewRequest = () => {
             style={{ outline: "1px solid #4f46e5", borderRadius: 10 }}
           >
             <div className="flex items-end mb-6">
-              <img src="../../../public/Logo.jpeg" className="w-24  mr-4" style={{ transform: `translateY(10px)` }} />
+              <img src={Image} className="w-24  mr-4" style={{ transform: `translateY(10px)` }} />
               <div className="mr-12 pr-4 border-r-2 border-rose-400">
                 <h4 className="font-semibold">Full Name</h4>
                 <p className="text-2xl">

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Logo from "./Logo";
 import MainNav from "./MainNav";
-
+import Image from "../assets/Logo.jpeg";
 const StyledSidebar = styled.aside`
   background-color: #fff;
   padding: 3.2rem 2.4rem;
