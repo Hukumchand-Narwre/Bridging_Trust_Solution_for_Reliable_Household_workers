@@ -69,6 +69,15 @@ export const getCompletedworkerApi = (token) => {
   });
 };
 
+export const getUsersApi = (token, id) => {
+  return axios.get(urlCreator(`users`), {
+    headers: {
+      "Content-Type": "application/json",
+      "x-access-token": token,
+    },
+  });
+};
+
 export const getUserByIdApi = (token, id) => {
   return axios.get(urlCreator(`user/${id}`), {
     headers: {

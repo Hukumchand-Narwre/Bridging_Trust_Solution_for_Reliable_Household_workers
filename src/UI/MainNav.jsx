@@ -58,6 +58,7 @@ function MainNav() {
   const currentUrl = window.location.href;
   const admin = currentUrl.split("/").includes("Admin");
   const user = currentUrl.split("/").includes("User");
+  const worker = currentUrl.split("/").includes("Worker");
   let displayNav;
   if (admin) {
     displayNav = (
@@ -82,9 +83,9 @@ function MainNav() {
         </li>
 
         <li>
-          <StyledNavLink to="/Login">
+          <StyledNavLink onClick={() => setToken(null)} to="/Login">
             <HiOutlineCog6Tooth />
-            <span onClick={() => setToken(null)}>Log Out</span>
+            <span>Log Out</span>
           </StyledNavLink>
         </li>
       </>
@@ -107,9 +108,34 @@ function MainNav() {
         </li>
 
         <li>
-          <StyledNavLink to="/">
+          <StyledNavLink onClick={() => setToken(null)} to="/">
             <HiOutlineCog6Tooth />
-            <span onClick={() => setToken(null)}>Log Out</span>
+            <span>Log Out</span>
+          </StyledNavLink>
+        </li>
+      </>
+    );
+  }
+  if (worker) {
+    displayNav = (
+      <>
+        <li>
+          <StyledNavLink to="/Worker">
+            <HiOutlineHomeModern />
+            <span>Holidays</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to="/Worker/Worker-detail">
+            <HiOutlineHomeModern />
+            <span>Your Account</span>
+          </StyledNavLink>
+        </li>
+
+        <li>
+          <StyledNavLink onClick={() => setToken(null)} to="/">
+            <HiOutlineCog6Tooth />
+            <span>Log Out</span>
           </StyledNavLink>
         </li>
       </>

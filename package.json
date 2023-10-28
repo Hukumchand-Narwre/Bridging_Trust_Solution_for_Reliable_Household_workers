@@ -12,7 +12,10 @@
   "dependencies": {
     "@headlessui/react": "^1.7.17",
     "axios": "^1.5.1",
+    "moment": "^2.29.4",
     "react": "^18.2.0",
+    "react-big-calendar": "0.38.4",
+    "react-calendar": "^4.6.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
     "react-router-dom": "5.3.3",

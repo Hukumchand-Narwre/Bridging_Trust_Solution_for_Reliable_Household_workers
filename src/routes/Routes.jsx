@@ -12,12 +12,28 @@ import { UserScreen } from "../screen/UserScreen/UserScreen";
 import NewRequest from "../components/NewRequest/NewRequest";
 import DisplayWorkerById from "../components/NewRequest/DisplayWorkerById";
 import UserAccount from "../screen/UserScreen/UserAccount";
+import { AdminWorkerScreen } from "../screen/AdminScreen/AdminWorkerScreen";
+import { AdminUserScreen } from "../screen/AdminScreen/AdminUserScreen";
 
 const ROUTES = [
   {
     path: `/User/user-detail`,
     key: "user",
     component: UserAccount,
+    isPrivate: true,
+    exact: true,
+  },
+  {
+    path: `/Admin/users-list`,
+    key: "admin-users-screen",
+    component: AdminUserScreen,
+    isPrivate: true,
+    exact: true,
+  },
+  {
+    path: `/Admin/workers-list`,
+    key: "admin-worker-screen",
+    component: AdminWorkerScreen,
     isPrivate: true,
     exact: true,
   },

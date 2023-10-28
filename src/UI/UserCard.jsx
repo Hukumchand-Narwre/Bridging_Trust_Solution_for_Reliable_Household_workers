@@ -9,7 +9,7 @@ const UserCard = ({ user }) => {
       <img src={imageUrl} alt={first_name} className="w-full h-64 object-cover" />
       <div className="px-6 py-4">
         <div className="font-bold text-xl text-gray-800 mb-2">
-          {first_name[0].toUpperCase() + first_name.slice(1) + last_name[0].toUpperCase() + last_name.slice(1)}
+          {first_name[0].toUpperCase() + first_name.slice(1) + " " + last_name[0].toUpperCase() + last_name.slice(1)}
         </div>
         <p className="text-gray-600 text-base">Type of work: {type_of_work}</p>
         <p className="text-gray-700 text-base">Salary: ₹{salary}</p>

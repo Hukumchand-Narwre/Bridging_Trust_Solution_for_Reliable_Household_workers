@@ -16,7 +16,7 @@ const StyledSidebar = styled.aside`
 function Sidebar() {
   return (
     <StyledSidebar>
-      <img src="../../public/Logo.jpeg" className="w-28 " />
+      <img src={Image} className="w-28 " />
       <MainNav />
     </StyledSidebar>
   );
