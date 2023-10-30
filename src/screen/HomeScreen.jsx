@@ -1,5 +1,5 @@
 import Home from "../assets/Home4.jpeg";
-import Home1 from "../assets/Home1.png";
+import Home1 from "../assets/home1.png";
 import Home6 from "../assets/home6.png";
 import BabySitter from "../assets/BabySitter.png";
 import cook from "../assets/Cook.png";
