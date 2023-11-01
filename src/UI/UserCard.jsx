@@ -1,8 +1,9 @@
 import React from "react";
 
 const UserCard = ({ user }) => {
-  const { first_name, last_name, type_of_work, salary } = user;
+  const { first_name, last_name, type_of_work, salary, photo_urls } = user;
   const imageUrl =
+    photo_urls[0] ||
     "https://img.freepik.com/premium-vector/young-smiling-man-avatar-man-with-brown-beard-mustache-hair-wearing-yellow-sweater-sweatshirt-3d-vector-people-character-illustration-cartoon-minimal-style_365941-860.jpg";
   return (
     <div className="max-w-sm w-full rounded overflow-hidden shadow-lg bg-white relative mb-12">

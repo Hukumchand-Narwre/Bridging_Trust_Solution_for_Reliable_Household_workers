@@ -13,6 +13,7 @@ import { createAccountApi } from "../../api/apiInstance";
 import Loader from "../../UI/PageLoader";
 import Modal from "../../UI/Modal";
 import { createUserStore } from "../../store/Auth/createAccount-user";
+import UploadImage from "../UploadImage/UploadImage";
 
 const EmployerCreateAccount = () => {
   const {
@@ -61,6 +62,9 @@ const EmployerCreateAccount = () => {
 
   return (
     <>
+      <Fade bottom>
+        <UploadImage />
+      </Fade>
       <Slide bottom delay={200}>
         <div className={classes.container}>
           <Heading as="h3" className={classes.subHeading}>

@@ -5,7 +5,6 @@ import Button from "../../UI/Button";
 import Loader from "../../UI/PageLoader";
 import { useHistory } from "react-router-dom";
 import Modal from "../../UI/Modal";
-import Image from "../../assets/Logo.jpeg";
 const NewRequest = () => {
   const { token } = useAuthStore();
   const [workerList, setWorkerList] = useState([]);
@@ -25,6 +24,7 @@ const NewRequest = () => {
     const id = e.target.getAttribute("data-id");
     history.push(`/Admin/NewRequest/${id}`);
   };
+
   return (
     <>
       {workerList.length > 0 ? (
@@ -35,7 +35,17 @@ const NewRequest = () => {
             style={{ outline: "1px solid #4f46e5", borderRadius: 10 }}
           >
             <div className="flex items-end mb-6">
-              <img src={Image} className="w-24  mr-4" style={{ transform: `translateY(10px)` }} />
+              <div
+                style={{ transform: `translateY(10px)` }}
+                className="w-24 h-24 relative rounded-full overflow-hidden ring-2 mr-4 ring-blue-500"
+              >
+                <img
+                  src={worker?.photo_urls?.[0]}
+                  alt={`Profile photo of ${name}`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              {/* <img src={worker?.photo_urls?.[0]} className="w-24  mr-4" style={{ transform: `translateY(10px)` }} /> */}
               <div className="mr-12 pr-4 border-r-2 border-rose-400">
                 <h4 className="font-semibold">Full Name</h4>
                 <p className="text-2xl">

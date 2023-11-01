@@ -79,7 +79,6 @@ const WorkerScreen = () => {
             style={{
               backgroundColor: "#000",
               padding: 10,
-              margin: "auto",
               color: "#fff",
               width: 50,
               margin: 10,
@@ -95,7 +94,6 @@ const WorkerScreen = () => {
             style={{
               backgroundColor: "#000",
               padding: 10,
-              margin: "auto",
               color: "#fff",
               width: 50,
               margin: 10,

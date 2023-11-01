@@ -56,8 +56,34 @@ const DisplayWorkerById = () => {
       alert("Something went wrong");
     }
   };
+  console.log(worker);
+
+  const imageUrl =
+    worker?.photo_urls?.[0] ||
+    "https://img.freepik.com/premium-vector/young-smiling-man-avatar-man-with-brown-beard-mustache-hair-wearing-yellow-sweater-sweatshirt-3d-vector-people-character-illustration-cartoon-minimal-style_365941-860.jpg";
   return (
     <>
+      <Fade bottom>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: "6.2rem",
+          }}
+        >
+          {" "}
+          <div className="flex items-center space-x-4">
+            <div
+              style={{ height: "14rem", width: "14rem" }}
+              className="relative rounded-full overflow-hidden  ring-2 ring-blue-500"
+            >
+              <img src={imageUrl} alt={`Profile photo of`} className="w-full h-full object-cover " />
+            </div>
+          </div>
+        </div>
+      </Fade>
       <Slide bottom delay={200}>
         <div style={{ width: 1000 }} className={classes.container}>
           <Heading as="h3" className={classes.subHeading}>
@@ -168,7 +194,7 @@ const DisplayWorkerById = () => {
                 placeholder="Pincode"
                 id="pincode"
                 className="w-5/6 "
-                value={worker.pincode}
+                value={worker.pincode ?? "123456"}
                 disabled
               />
             </FormRow>

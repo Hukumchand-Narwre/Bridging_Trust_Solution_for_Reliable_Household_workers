@@ -12,6 +12,7 @@ import { useCommonDetailStore } from "../../store/Auth/common-Detail";
 import { createAccountApi } from "../../api/apiInstance";
 import Loader from "../../UI/PageLoader";
 import Modal from "../../UI/Modal";
+import UploadImage from "../UploadImage/UploadImage";
 
 const EmployeeCreateAccount = () => {
   const {
@@ -50,7 +51,7 @@ const EmployeeCreateAccount = () => {
     success,
     setSuccess,
   } = createWorkerStore();
-  const { first_name, last_name, phone_number } = useCommonDetailStore();
+  const { first_name, last_name, phone_number, photo_urls } = useCommonDetailStore();
 
   const handleWorkerCreateAccount = async () => {
     const data = {
@@ -73,6 +74,7 @@ const EmployeeCreateAccount = () => {
       hash_password,
       role: "Worker",
       pincode,
+      photo_urls,
     };
     console.log(data);
     try {
@@ -87,6 +89,9 @@ const EmployeeCreateAccount = () => {
 
   return (
     <>
+      <Fade bottom>
+        <UploadImage />
+      </Fade>
       <Slide bottom delay={200}>
         <div className={classes.container}>
           <Heading as="h3" className={classes.subHeading}>

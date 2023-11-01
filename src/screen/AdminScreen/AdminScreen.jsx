@@ -35,7 +35,7 @@ const AdminScreen = () => {
         className=" h-56 p-4 m-4 bg-yellow-500 text-white rounded-lg flex flex-col justify-between"
       >
         <div>
-          <div className="text-4xl font-bold">10+</div> {/* Replace with your data */}
+          <div className="text-4xl font-bold">0</div> {/* Replace with your data */}
           <div className="text-2xl">Booking Requests</div>
         </div>
         <button className="bg-white text-yellow-500 py-2 px-4 rounded-md text-xl">View Booking</button>
