@@ -1,10 +1,11 @@
+import ROUTES, { RenderRoutes } from "./routes/Routes";
+
 import "./App.css";
+import { useAuthStore } from "./store/Auth";
+
 function App() {
-  return (
-    <>
-      <h1>Major project started repository set up done</h1>
-    </>
-  );
+  const { token } = useAuthStore();
+  return <RenderRoutes routes={ROUTES} token={token} />;
 }
 
 export default App;
