@@ -34,7 +34,7 @@ const EmployerCreateAccount = () => {
     pincode,
     setPincode,
   } = createUserStore();
-  const { first_name, last_name, phone_number } = useCommonDetailStore();
+  const { first_name, last_name, phone_number, photo_urls } = useCommonDetailStore();
 
   const handleWorkerCreateAccount = async () => {
     const data = {
@@ -48,6 +48,7 @@ const EmployerCreateAccount = () => {
       pincode,
       hash_password,
       role: "User",
+      photo_urls,
     };
     console.log(data);
     try {

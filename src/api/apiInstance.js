@@ -38,6 +38,25 @@ export const getPendingWorkerApi = (token) => {
   });
 };
 
+export const createNewBookingApi = (data, token) => {
+  console.log(data);
+  return axios.post(urlCreator("bookings"), data, {
+    headers: {
+      "Content-Type": "application/json",
+      "x-access-token": token,
+    },
+  });
+};
+
+export const getPendingBookingApi = (token) => {
+  return axios.get(urlCreator("/bookings/pending"), {
+    headers: {
+      "Content-Type": "application/json",
+      "x-access-token": token,
+    },
+  });
+};
+
 export const getPendingWorkerByIdApi = (token, id) => {
   return axios.get(urlCreator(`worker/${id}`), {
     headers: {
