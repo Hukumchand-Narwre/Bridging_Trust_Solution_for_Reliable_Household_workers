@@ -29,17 +29,19 @@ const AdminScreen = () => {
           <NavLink to="/Admin/workers-list">View Workers</NavLink>
         </button>
       </div>
-
       <div
         style={{ width: "28rem" }}
-        className=" h-56 p-4 m-4 bg-yellow-500 text-white rounded-lg flex flex-col justify-between"
+        className="h-56 p-4 m-4 bg-yellow-500 text-white rounded-lg flex flex-col justify-between"
       >
         <div>
-          <div className="text-4xl font-bold">0</div> {/* Replace with your data */}
-          <div className="text-2xl">Booking Requests</div>
+          <div className="text-4xl font-bold">5+</div>
+          <div className="text-2xl">New Bookings</div>
         </div>
-        <button className="bg-white text-yellow-500 py-2 px-4 rounded-md text-xl">View Booking</button>
+        <button className="bg-white text-red-500 py-2 px-4 rounded-md text-xl">
+          <NavLink to="/Admin/Booking">View Bookings</NavLink>
+        </button>
       </div>
+
       <div
         style={{ width: "28rem" }}
         className="w-96 h-56 p-4 m-4 bg-green-500 text-white rounded-lg flex flex-col justify-between"

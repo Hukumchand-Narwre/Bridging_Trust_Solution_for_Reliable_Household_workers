@@ -14,6 +14,7 @@ import DisplayWorkerById from "../components/NewRequest/DisplayWorkerById";
 import UserAccount from "../screen/UserScreen/UserAccount";
 import { AdminWorkerScreen } from "../screen/AdminScreen/AdminWorkerScreen";
 import { AdminUserScreen } from "../screen/AdminScreen/AdminUserScreen";
+import AdminBookingScreen from "../screen/BookingScreen/AdminBookingScreen";
 
 const ROUTES = [
   {
@@ -62,6 +63,13 @@ const ROUTES = [
     path: "/Worker",
     key: "EmployeeScreen",
     component: WorkerScreen,
+    isPrivate: true,
+    exact: true,
+  },
+  {
+    path: "/Admin/Booking",
+    key: "AdminScreen",
+    component: AdminBookingScreen,
     isPrivate: true,
     exact: true,
   },
