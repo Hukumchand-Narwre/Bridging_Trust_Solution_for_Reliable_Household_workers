@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BlobServiceClient } from "@azure/storage-blob";
 import Loader from "../../UI/PageLoader";
 import ImageUploadBox from "./ImageUploadBox";
 import { useCommonDetailStore } from "../../store/Auth/common-Detail";
 import Button from "../../UI/Button";
+import * as cocoSsd from "@tensorflow-models/coco-ssd";
 
 const blobSasUrl = import.meta.env.VITE_CONNECTION_STRING;
 
@@ -20,6 +21,47 @@ function UploadImage() {
   const [file, setFile] = useState(null);
   const [isLoading, setisLoading] = useState(false);
   const { photo_urls, setPhotos } = useCommonDetailStore();
+  const [model, setModel] = useState(null);
+
+  useEffect(() => {
+    setisLoading(true);
+    const loadModel = async () => {
+      const net = await cocoSsd.load();
+      setModel(net);
+    };
+
+    loadModel().then(() => setisLoading(false));
+  }, []);
+
+  const handleImageUrlSubmit = (url) => {
+    if (!url) return;
+    console.log("run model");
+    if (!model) {
+      console.error("Model not loaded yet.");
+      return;
+    }
+    fetch(url)
+      .then((response) => response.blob())
+      .then(async (blob) => {
+        const img = new Image();
+        img.src = URL.createObjectURL(blob);
+        img.onload = async () => {
+          const predictions = await model.detect(img);
+          console.log("Object detection result:", predictions);
+          const isHuman = predictions.some((item) => item.class === "person" || item.class === "human");
+          console.log(isHuman);
+          if (!isHuman) {
+            alert("Upload correct image");
+            setPhotos([]);
+            setFile(null);
+          }
+        };
+      })
+      .catch((error) => {
+        console.error("Error loading image:", error);
+      });
+  };
+
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
@@ -31,9 +73,9 @@ function UploadImage() {
       const promises = [];
       const blockBlobClient = containerClient.getBlockBlobClient(file.name);
       promises.push(blockBlobClient.uploadBrowserData(file));
-
       await Promise.all(promises);
       const imageUrl = blockBlobClient.url;
+      handleImageUrlSubmit(imageUrl);
       setPhotos([imageUrl]);
       console.log("done uploading");
     } catch (error) {

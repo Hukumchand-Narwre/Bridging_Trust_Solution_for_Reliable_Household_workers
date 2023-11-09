@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import UplodSvg from "./Upload";
 import classes from "./ImageUploadBox.module.css";
+
 const ImageUploadBox = ({ handleFileChange, fileName }) => {
   const [image, setImage] = useState(null);
 
@@ -21,9 +22,7 @@ const ImageUploadBox = ({ handleFileChange, fileName }) => {
   };
 
   return (
-    <div
-      className={classes.imageUploadBox}
-    >
+    <div className={classes.imageUploadBox}>
       <div
         style={{
           border: "2px dashed #ccc",
