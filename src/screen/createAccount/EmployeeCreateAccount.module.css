@@ -1,0 +1,58 @@
+.centerItem {
+  display: "flex";
+  justify-content: "Center";
+  align-items: "center";
+  margin: auto;
+}
+.heading {
+  font-size: 24px; /* Adjust the font size as needed */
+  font-weight: bold; /* Optional: Make the text bold */
+  text-align: center; /* Center the text horizontally */
+  color: #333; /* Set the text color to your preference */
+  margin: 20px; /* Add some margin space above and below the heading */
+}
+.completeForm {
+  display: "flex";
+  justify-content: "center";
+  align-items: "center";
+  text-align: center;
+  margin: auto;
+  margin-top: 8rem;
+  max-height: 70vh;
+  max-width: 100vh;
+  box-shadow: 8px 10px 10px rgba(43, 41, 41, 0.2);
+  overflow-y: scroll;
+  border-radius: 1rem;
+  margin-bottom: 5rem;
+}
+.container {
+  padding: 2.4rem 4rem;
+  background-color: #fcfcfc;
+  border: 1px solid #cdced1;
+  border-radius: 7px;
+  overflow: hidden;
+  font-size: 1.4rem;
+  width: 1200px;
+  margin: auto;
+  margin-bottom: 2rem;
+  box-shadow: 2px 2px 6px rgba(18, 16, 16, 0.04);
+  /* background: linear-gradient(to bottom, #ffffff, #ffc2d9); */
+  margin-top: 6.2rem;
+}
+.subContainer {
+  padding: 2.4rem 4rem;
+  background-color: #fff;
+  border: 1px solid #cdced1;
+  border-radius: 7px;
+  overflow: hidden;
+  font-size: 1.4rem;
+  max-height: 40vh;
+  max-width: 80vh;
+  margin-bottom: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 2px 2px 6px #1210100a;
+}
+.subHeading {
+  margin: 1rem 0;
+}

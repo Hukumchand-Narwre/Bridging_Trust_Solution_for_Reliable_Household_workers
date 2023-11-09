@@ -1,0 +1,63 @@
+.box{
+    width: 300px;
+    height: 350px;
+}
+.box .rectangle {
+background-color: #ff4d00;
+border: 1px solid;
+border-radius: 20px;
+box-shadow: 0px 4px 4px #f3f0f0;
+border: none;
+/* border: 5px;
+border-color:#0d0d0d ; */
+height: 350px;
+left: 0;
+margin-left: 50px;
+margin-top: -50px;
+position: fixed;
+top: 50;
+width: 300px;
+}
+.innerRectangle {
+    background-color: #fffefe;
+    border-radius: 4px 4px 10px 10px;
+    height: 250px;
+    left: 50.5px;
+    position: fixed;
+    top: 288px;
+    width: 299px;
+    }
+.h3 {
+        -webkit-text-stroke: 1px #000000;
+        color: #000000;
+        font-family: "Tiro Devanagari Marathi-Regular", Helvetica;
+        font-size: 15px;
+        font-weight: 100;
+        left: 0;
+        margin-left: 20px;
+        letter-spacing: 4px;
+        line-height: normal;
+        position: relative; /* Changed to relative */
+        top: 20px;
+        width: 788px;
+      }
+
+.ellipse {
+    width: 150px; /* Adjust the width as needed */
+    height: 150px; /* Adjust the height as needed */
+    background-color: transparent;
+    border-radius: 10px;
+    border-color: #000000;
+    position: relative;
+    display: flex;
+    left: 60px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .image {
+    width: 100px; 
+    height: 100px; /* Adjust the image size as needed */
+    object-fit: cover;
+    border-radius: 50%;
+  }
