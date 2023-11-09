@@ -11,7 +11,7 @@ const Header = () => {
           <p className=" font-semibold ">A.P.Trading</p>
         </div>
         <div className="flex font-semibold">
-          <Link to="/" className="mr-6 ">
+          <Link to="/dhol-tasha-group-management-website" className="mr-6 ">
             Home
           </Link>
 
