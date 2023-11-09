@@ -102,7 +102,7 @@ const ROUTES = [
     exact: true,
   },
   {
-    path: "/dhol-tasha-group-management-website",
+    path: "/",
     key: "HomeScreen",
     component: HomeScreen,
     isPrivate: false,

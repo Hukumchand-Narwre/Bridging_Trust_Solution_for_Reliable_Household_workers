@@ -4,5 +4,5 @@ import react from "@vitejs/plugin-react";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: "dhol-tasha-group-management-website",
+  // base: "dhol-tasha-group-management-website",
 });

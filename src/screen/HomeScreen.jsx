@@ -16,6 +16,7 @@ const HomeScreen = () => {
           backgroundSize: "concoverain",
           backgroundPosition: "bottom top",
           backgroundBlendMode: "multiply, screen",
+          backgroundAttachment: "fixed",
         }}
         className="flex h-[100vh] bg-cover  bg-no-repeat items-center justify-center"
       >
