@@ -2,14 +2,20 @@ import React, { useState, useEffect } from "react";
 import * as tf from "@tensorflow/tfjs";
 import * as mobilenet from "@tensorflow-models/mobilenet";
 import axios from "axios";
+import Button from "../../UI/Button";
+import Heading from "../../UI/Heading";
 
-function ImageSimilarityChecker() {
+function ImageSimilarityChecker({ referenceImage, imageUrls }) {
+  imageUrls = imageUrls
+    .map((image) => {
+      if (image.startsWith("url")) {
+        return null;
+      } else {
+        return image;
+      }
+    })
+    .filter((image) => image != null);
   const [model, setModel] = useState(null);
-  const [referenceImage, setReferenceImage] = useState("");
-  const [imageUrls, setImageUrls] = useState([
-    "https://www2.deloitte.com/content/dam/Deloitte/nl/Images/promo_images/deloitte-nl-cm-digital-human-promo.jpg",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsy1JEG4x2UvTagSw1nlpYVRuckk0Tc3Gq-g&usqp=CAU",
-  ]);
 
   const [bestMatchUrl, setBestMatchUrl] = useState("");
   const [bestSimilarity, setBestSimilarity] = useState(0);
@@ -39,7 +45,8 @@ function ImageSimilarityChecker() {
         img.src = URL.createObjectURL(blob);
         img.onload = async () => {
           const referenceEmbedding = await model.infer(img, true);
-
+          imageUrls.shift();
+          imageUrls.shift();
           for (const imageUrl of imageUrls) {
             const response = await axios.get(imageUrl, {
               responseType: "blob",
@@ -56,7 +63,6 @@ function ImageSimilarityChecker() {
               bestMatchImageUrl = imageUrl;
             }
           }
-
           // Set the best match URL and similarity
           setBestMatchUrl(bestMatchImageUrl);
           setBestSimilarity(bestSimilarityFound);
@@ -66,31 +72,46 @@ function ImageSimilarityChecker() {
         console.error("Error loading image:", error);
       });
   };
+  console.log(bestMatchUrl, bestSimilarity);
 
   return (
     <div>
-      <h1>Image Matching Checker</h1>
       {model ? (
-        <div>
-          <input
-            type="text"
-            placeholder="Reference Image URL"
-            value={referenceImage}
-            onChange={(e) => setReferenceImage(e.target.value)}
-          />
-          <button onClick={handleReferenceImageSubmit}>Check for Matching Images</button>
+        <div className="flex flex-col items-center ">
+          <Button className="mt-12" onClick={handleReferenceImageSubmit}>
+            Check for Matching Images
+          </Button>
+          {bestMatchUrl && bestSimilarity > 0.9 && (
+            <div className="flex flex-col items-center space-x-4">
+              <div
+                style={{ height: "14rem", width: "14rem" }}
+                className="relative rounded-full overflow-hidden  ring-2 ring-blue-500 mt-12 "
+              >
+                <img src={bestMatchUrl} alt={`Profile photo of`} className="w-full h-full object-cover" />
+              </div>
+              <Heading as="h3" className="mt-12 ring-2 ring-blue-500 p-3">
+                The Uploaded Image Is Most Similar To The Image
+              </Heading>
+            </div>
+          )}
+          {(!bestMatchUrl || bestSimilarity <= 0.9) && bestMatchUrl !== "" && (
+            <Heading as="h3" className="mt-12 ring-2 ring-blue-500 p-3">
+              The uploaded image does not match any image in the URL array.
+            </Heading>
+          )}
         </div>
       ) : (
-        <p>Loading model...</p>
-      )}
-      {bestMatchUrl && bestSimilarity > 0.9 && (
-        <p>
-          The uploaded image is most similar to the image at URL: {bestMatchUrl} (Similarity:{" "}
-          {Math.round(bestSimilarity * 100)}%)
+        <p className="mt-4">
+          <div className="wrapper">
+            <div className="circle"></div>
+            <div className="circle"></div>
+            <div className="circle"></div>
+            <div className="shadow"></div>
+            <div className="shadow"></div>
+            <div className="shadow"></div>
+          </div>
+          <span className="mt-12">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Loading model...</span>
         </p>
-      )}
-      {(!bestMatchUrl || bestSimilarity <= 0.9) && bestMatchUrl !== "" && (
-        <p>The uploaded image does not match any image in the URL array.</p>
       )}
     </div>
   );

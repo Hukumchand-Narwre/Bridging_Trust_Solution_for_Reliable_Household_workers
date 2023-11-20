@@ -48,8 +48,30 @@ export const createNewBookingApi = (data, token) => {
   });
 };
 
+export const UpdateBookingStatusApi = (id, token) => {
+  return axios.post(
+    urlCreator(`booking/update/status/${id}`),
+    {},
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": token,
+      },
+    }
+  );
+};
+
 export const getPendingBookingApi = (token) => {
-  return axios.get(urlCreator("/bookings/pending"), {
+  return axios.get(urlCreator("booking/pending"), {
+    headers: {
+      "Content-Type": "application/json",
+      "x-access-token": token,
+    },
+  });
+};
+
+export const getCompletedBookingApi = (token) => {
+  return axios.get(urlCreator("booking/completed"), {
     headers: {
       "Content-Type": "application/json",
       "x-access-token": token,
@@ -99,6 +121,15 @@ export const getUsersApi = (token, id) => {
 
 export const getUserByIdApi = (token, id) => {
   return axios.get(urlCreator(`user/${id}`), {
+    headers: {
+      "Content-Type": "application/json",
+      "x-access-token": token,
+    },
+  });
+};
+
+export const getAllUrls = (token) => {
+  return axios.get(urlCreator(`worker/photourls`), {
     headers: {
       "Content-Type": "application/json",
       "x-access-token": token,

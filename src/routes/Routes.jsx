@@ -15,6 +15,8 @@ import UserAccount from "../screen/UserScreen/UserAccount";
 import { AdminWorkerScreen } from "../screen/AdminScreen/AdminWorkerScreen";
 import { AdminUserScreen } from "../screen/AdminScreen/AdminUserScreen";
 import AdminBookingScreen from "../screen/BookingScreen/AdminBookingScreen";
+import AdminBookingDetailScreen from "../screen/AdminScreen/AdminBookingDetailScreen";
+import AdminCompleteBookingScreen from "../screen/AdminScreen/AdminCompleteBookingScreen";
 
 const ROUTES = [
   {
@@ -31,6 +33,14 @@ const ROUTES = [
     isPrivate: true,
     exact: true,
   },
+  {
+    path: `/Admin/BookingDetail/:id`,
+    key: "admin-bookingDetail-screen",
+    component: AdminBookingDetailScreen,
+    isPrivate: true,
+    exact: true,
+  },
+
   {
     path: `/Admin/workers-list`,
     key: "admin-worker-screen",
@@ -63,6 +73,14 @@ const ROUTES = [
     path: "/Worker",
     key: "EmployeeScreen",
     component: WorkerScreen,
+    isPrivate: true,
+    exact: true,
+  },
+
+  {
+    path: "/Admin/CompletedBooking",
+    key: "Admin-completed-Booking-Screen",
+    component: AdminCompleteBookingScreen,
     isPrivate: true,
     exact: true,
   },

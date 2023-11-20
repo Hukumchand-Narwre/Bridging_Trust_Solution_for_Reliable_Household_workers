@@ -1,26 +1,28 @@
-import { useEffect, useState } from "react";
-import { getCompletedworkerApi, getPendingBookingApi, getPendingWorkerApi, getUsersApi } from "../../api/apiInstance";
+import React, { useEffect, useState } from "react";
+import { getCompletedBookingApi, getCompletedworkerApi, getUsersApi } from "../../api/apiInstance";
 import { useAuthStore } from "../../store/Auth";
-import Button from "../../UI/Button";
 import Loader from "../../UI/PageLoader";
-import { useHistory } from "react-router-dom";
 import Modal from "../../UI/Modal";
+import Button from "../../UI/Button";
 import { HiArrowRight } from "react-icons/hi2";
+import { useHistory } from "react-router-dom";
 
-const AdminBookingScreen = () => {
-  const { token } = useAuthStore();
+const AdminCompleteBookingScreen = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [bookingList, setBookingList] = useState([]);
   const [workerList, setWorkerList] = useState([]);
   const [userList, setUserList] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const { token } = useAuthStore();
+
   const history = useHistory();
+
   useEffect(() => {
     async function getPendingBookings() {
       setIsLoading(true);
-      const bookingLists = await getPendingBookingApi(token);
+      const bookingLists = await getCompletedBookingApi(token);
       const workersList = await getCompletedworkerApi(token);
       const usersList = await getUsersApi(token);
-
+      console.log(bookingLists);
       setWorkerList(workersList.data.data);
       setUserList(usersList.data.data);
       setBookingList(bookingLists.data.data);
@@ -28,21 +30,17 @@ const AdminBookingScreen = () => {
     }
     getPendingBookings();
   }, []);
-
   const displayBookingData = bookingList.map((booking) => {
     let user = userList.filter((user) => user.id === booking.user_id);
     let worker = workerList.filter((worker) => worker.id === booking.worker_id);
     return { id: booking.id, user: { ...user }, worker: { ...worker } };
   });
+  console.log(displayBookingData);
 
   const handleViewDetail = (e) => {
     const id = e.target.getAttribute("data-id");
     history.push(`/Admin/BookingDetail/${id}`, displayBookingData);
   };
-  console.log(bookingList);
-
-  console.log(displayBookingData);
-
   return (
     <>
       {displayBookingData.length > 0 ? (
@@ -108,11 +106,11 @@ const AdminBookingScreen = () => {
           </div>
         ))
       ) : (
-        <Modal route="/Admin" Heading="No Pending Request" msg="" />
+        <Modal route="/Admin" Heading="No Completed Request" msg="" />
       )}
       {isLoading && <Loader />}
     </>
   );
 };
 
-export default AdminBookingScreen;
+export default AdminCompleteBookingScreen;

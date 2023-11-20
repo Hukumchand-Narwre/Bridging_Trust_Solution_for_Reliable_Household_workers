@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useAuthStore } from "../../store/Auth";
-import { getPendingWorkerByIdApi, updateWorkerStatus } from "../../api/apiInstance";
+import { getAllUrls, getPendingWorkerByIdApi, updateWorkerStatus } from "../../api/apiInstance";
 
 import Fade from "react-reveal/Fade";
 import Slide from "react-reveal/Fade";
@@ -16,11 +16,13 @@ import Heading from "../../UI/Heading";
 
 import Loader from "../../UI/PageLoader";
 import Modal from "../../UI/Modal";
+import ImageSimilarityChecker from "../../screen/AIModel/ImageSimilarityChecker";
 
 const DisplayWorkerById = () => {
   const { token } = useAuthStore();
   const [worker, setWorker] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [photoUrls, setPhotoUrls] = useState([]);
   const history = useHistory();
   useEffect(() => {
     const currentUrl = window.location.href;
@@ -30,7 +32,8 @@ const DisplayWorkerById = () => {
       async function getPendingWorkers() {
         setIsLoading(true);
         const worker = await getPendingWorkerByIdApi(token, id);
-
+        const photos = await getAllUrls(token);
+        setPhotoUrls(photos.data.data);
         setWorker(worker.data.data[0]);
         setIsLoading(false);
       }
@@ -61,6 +64,8 @@ const DisplayWorkerById = () => {
   const imageUrl =
     worker?.photo_urls?.[0] ||
     "https://img.freepik.com/premium-vector/young-smiling-man-avatar-man-with-brown-beard-mustache-hair-wearing-yellow-sweater-sweatshirt-3d-vector-people-character-illustration-cartoon-minimal-style_365941-860.jpg";
+
+  console.log(imageUrl);
   return (
     <>
       <Fade bottom>
@@ -82,6 +87,7 @@ const DisplayWorkerById = () => {
               <img src={imageUrl} alt={`Profile photo of`} className="w-full h-full object-cover " />
             </div>
           </div>
+          <ImageSimilarityChecker referenceImage={imageUrl} imageUrls={photoUrls} />
         </div>
       </Fade>
       <Slide bottom delay={200}>
