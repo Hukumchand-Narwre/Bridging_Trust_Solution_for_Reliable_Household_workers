@@ -136,3 +136,34 @@ export const getAllUrls = (token) => {
     },
   });
 };
+
+export const fetchPendingHolidays = (token) => {
+  return axios.get(urlCreator("holiday/pending"), {
+    headers: {
+      "Content-Type": "application/json",
+      "x-access-token": token,
+    },
+  });
+};
+
+export const UpdateHolidayStatusApi = (id, token) => {
+  return axios.post(
+    urlCreator(`holiday/update/status/${id}`),
+    {},
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": token,
+      },
+    }
+  );
+};
+
+export const getWorkerByIdApi = (token, id) => {
+  return axios.get(urlCreator(`worker/${id}`), {
+    headers: {
+      "Content-Type": "application/json",
+      "x-access-token": token,
+    },
+  });
+};

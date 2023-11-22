@@ -21,7 +21,7 @@ export const AdminWorkerScreen = () => {
     <>
       <div className="grid grid-cols-3 gap-4">
         {workerList.map((worker, index) => (
-          <UserCard key={index} user={worker} />
+          <UserCard key={index} user={worker} showHire={false} />
         ))}
       </div>
       {isLoading && <Loader />}

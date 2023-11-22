@@ -17,12 +17,22 @@ import { AdminUserScreen } from "../screen/AdminScreen/AdminUserScreen";
 import AdminBookingScreen from "../screen/BookingScreen/AdminBookingScreen";
 import AdminBookingDetailScreen from "../screen/AdminScreen/AdminBookingDetailScreen";
 import AdminCompleteBookingScreen from "../screen/AdminScreen/AdminCompleteBookingScreen";
+import HolidayRequestForm from "../screen/WorkerScreen/WorkerScreen";
+import AdminHolidayScreen from "../screen/AdminScreen/AdminHolidayScreen";
+import WorkerAccount from "../screen/WorkerScreen/WorkerAccount";
 
 const ROUTES = [
   {
     path: `/User/user-detail`,
     key: "user",
     component: UserAccount,
+    isPrivate: true,
+    exact: true,
+  },
+  {
+    path: `/Worker/Worker-detail`,
+    key: "worker",
+    component: WorkerAccount,
     isPrivate: true,
     exact: true,
   },
@@ -59,6 +69,13 @@ const ROUTES = [
     path: "/Admin/NewRequest",
     key: "NewRequest",
     component: NewRequest,
+    isPrivate: true,
+    exact: true,
+  },
+  {
+    path: "/Admin/Holiday",
+    key: "Holiday-Admin",
+    component: AdminHolidayScreen,
     isPrivate: true,
     exact: true,
   },

@@ -1,130 +1,232 @@
-import React, { useState } from "react";
-import ReactDOM from "react-dom";
+// import React, { useState, useEffect } from "react";
+// import { Calendar, momentLocalizer } from "react-big-calendar";
+// import moment from "moment";
+// import "react-big-calendar/lib/css/react-big-calendar.css";
+// import { useAuthStore } from "../../store/Auth";
+// import Modal from "../../UI/Modal";
+
+// const localizer = momentLocalizer(moment, { format: "YYYY-MM-DDTHH:mm:ss.SSSZ" });
+
+// const WorkerScreen = () => {
+//   const { user, token } = useAuthStore();
+//   const [bookings, setBookings] = useState([]);
+//   const [modalMsg, setModalMsg] = useState(null);
+
+//   useEffect(() => {
+//     // Make an API call to get the booked dates for the worker
+//     fetch(`https://chiragb79.pythonanywhere.com/v1/holiday/pending`, {
+//       headers: {
+//         "Content-Type": "application/json",
+//         "x-access-token": token,
+//       },
+//     })
+//       .then((response) => response.json())
+//       .then((data) => {
+//         console.log("Booked Dates API Response:", data);
+
+//         // Update the state with the booked dates
+//         const bookedDates = data.data.map((booking) => ({
+//           start: moment.utc(booking.date).toDate(),
+//           end: moment.utc(booking.date).toDate(),
+//           title: "Request Sent",
+//         }));
+
+//         setBookings(bookedDates);
+//       })
+//       .catch((error) => {
+//         console.error("Error fetching booked dates:", error);
+//         // Handle error as needed
+//       });
+//   }, [user.id, token]);
+
+//   const handleEventClick = (e) => {
+//     console.log("event clicked!", e);
+//     postHolidayRequest(e.start);
+//   };
+
+//   const postHolidayRequest = (date) => {
+//     fetch("http://chiragb79.pythonanywhere.com/v1/holidays", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         worker_id: user.id,
+//         date,
+//       }),
+//     })
+//       .then((response) => response.json())
+//       .then((data) => {
+//         setModalMsg("Holiday Request Sent");
+//         console.log("API Response:", data);
+//         // Handle the API response as needed
+//         // For now, just update the state to show "Request Sent" in the calendar
+//         setBookings((prev) => [
+//           ...prev,
+//           {
+//             start: date,
+//             end: date,
+//             title: `Request Sent`,
+//           },
+//         ]);
+//       })
+//       .catch((error) => {
+//         console.error("Error making API request:", error);
+//         // Handle error as needed
+//       });
+//   };
+
+//   return (
+//     <div>
+//       <Calendar
+//         onSelectEvent={(e) => {
+//           console.log(e);
+//         }}
+//         onSelecting={() => console.log(312321)}
+//         localizer={localizer}
+//         events={bookings}
+//         startAccessor="start"
+//         endAccessor="end"
+//         style={{ height: 500 }}
+//         selectable={true}
+//         onSelectSlot={handleEventClick}
+//       />
+//       {modalMsg && <Modal msg={modalMsg} route="/Worker" />}
+//     </div>
+//   );
+// };
+
+// export default WorkerScreen;
+
+import React, { useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-const localizer = momentLocalizer(moment);
+import { useAuthStore } from "../../store/Auth";
+import Modal from "../../UI/Modal";
+
+const localizer = momentLocalizer(moment, { format: "YYYY-MM-DDTHH:mm:ss.SSSZ" });
 
 const WorkerScreen = () => {
-  const [visible, setVisible] = useState(false);
-  const [selectedTime, setSelectedTime] = useState(new Date());
-  const [bookings, setBookings] = useState([
-    {
-      start: new Date(),
-      end: new Date(),
-      title: `Booking One`,
-    },
-  ]);
+  const { user, token } = useAuthStore();
+  const [bookings, setBookings] = useState([]);
+  const [modalMsg, setModalMsg] = useState(null);
+
+  useEffect(() => {
+    // Fetch pending holidays
+    fetchHolidays("pending");
+  }, [user.id, token]);
+
+  useEffect(() => {
+    // Fetch completed holidays
+    fetchHolidays("completed");
+  }, [user.id, token]);
+
+  const fetchHolidays = (status) => {
+    const apiUrl = `https://chiragb79.pythonanywhere.com/v1/holiday/${status}`;
+
+    fetch(apiUrl, {
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": token,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(`${status} Holidays API Response:`, data);
+
+        const holidayTitle = status === "pending" ? "Request Sent" : "Request Accepted";
+
+        // Clear the existing state if it's the first fetch
+        if (status === "pending") {
+          setBookings([]);
+        }
+
+        // Update the state with the holidays
+        const holidays = data.data
+          .filter((holiday) => holiday.worker_id === user.id)
+          .map((holiday) => ({
+            start: moment.utc(holiday.date).toDate(),
+            end: moment.utc(holiday.date).toDate(),
+            title: holidayTitle,
+          }));
+
+        setBookings((prev) => [...prev, ...holidays]);
+      })
+      .catch((error) => {
+        console.error(`Error fetching ${status} holidays:`, error);
+        // Handle error as needed
+      });
+  };
 
   const handleEventClick = (e) => {
     console.log("event clicked!", e);
-    setVisible(true);
-    setSelectedTime(e.slots[0]);
+    setModalMsg(e.title);
+  };
+  const postHolidayRequest = (date) => {
+    fetch("http://chiragb79.pythonanywhere.com/v1/holidays", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        worker_id: user.id,
+        date,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setModalMsg("Holiday Request Sent");
+        console.log("API Response:", data);
+
+        // Handle the API response as needed
+        // For now, just update the state to show "Request Sent" in the calendar
+        setBookings((prev) => [
+          ...prev,
+          {
+            start: date,
+            end: date,
+            title: `Request Sent`,
+          },
+        ]);
+      })
+      .catch((error) => {
+        console.error("Error making API request:", error);
+        // Handle error as needed
+      });
   };
 
-  const handleEventClic = (e) => {
-    console.log("event clic", e);
-    setVisible(true);
-    setSelectedTime(e.slots[0]);
-  };
-
-  const setHandleClick = (time) => {
-    const newBooking = {
-      start: new Date(new Date(selectedTime).setHours(time, 0, 0)),
-      end: new Date(new Date(selectedTime).setHours(time + 1, 0, 0)),
-      title: `Booking at ${time}`,
-    };
-    setBookings((prev) => [...prev, newBooking]);
-    setVisible(false);
-  };
-
-  const PickerModal = () => {
-    return (
-      <div
-        style={{
-          width: "50vw",
-          height: "70vh",
-          backgroundColor: "#ccc",
-          zIndex: 10,
-          margin: "auto",
-        }}
-      >
-        Available Slots:
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-start",
-            flexWrap: "wrap",
-          }}
-        >
-          <div
-            onClick={() => {
-              setHandleClick(8);
-            }}
-            style={{
-              backgroundColor: "#000",
-              padding: 10,
-              color: "#fff",
-              width: 50,
-              margin: 10,
-              height: 20,
-            }}
-          >
-            08:00
-          </div>
-          <div
-            onClick={() => {
-              setHandleClick(10);
-            }}
-            style={{
-              backgroundColor: "#000",
-              padding: 10,
-              color: "#fff",
-              width: 50,
-              margin: 10,
-              height: 20,
-            }}
-          >
-            10:00
-          </div>
-          <div
-            onClick={() => {
-              setHandleClick(12);
-            }}
-            style={{
-              backgroundColor: "#000",
-              padding: 10,
-              color: "#fff",
-              width: 50,
-              margin: 10,
-              height: 20,
-            }}
-          >
-            12:00
-          </div>
-        </div>
-      </div>
+  const handleSelectSlot = (slotInfo) => {
+    // Check if the selected slot has a title of "Request Sent" or "Request Accepted"
+    const isClickable = !bookings.some(
+      (event) =>
+        moment(slotInfo.start).isSame(event.start) &&
+        (event.title === "Request Sent" || event.title === "Request Accepted")
     );
+
+    if (!isClickable) {
+      // Do not allow selecting the slot
+      console.log("Slot not clickable");
+    } else {
+      // Allow selecting the slot
+      console.log("Slot clickable");
+      postHolidayRequest(slotInfo.start);
+    }
   };
 
   return (
     <div>
-      {!visible && (
-        <Calendar
-          onSelectEvent={(e) => {
-            console.log(e);
-          }}
-          onSelecting={() => console.log(312321)}
-          localizer={localizer}
-          events={bookings}
-          startAccessor="start"
-          endAccessor="end"
-          style={{ height: 500 }}
-          selectable={true}
-          onSelectSlot={handleEventClick}
-        />
-      )}
-      {visible && <PickerModal />}
+      <Calendar
+        onSelectEvent={handleEventClick}
+        onSelecting={() => console.log(312321)}
+        localizer={localizer}
+        events={bookings}
+        startAccessor="start"
+        endAccessor="end"
+        style={{ height: 500 }}
+        selectable={true}
+        onSelectSlot={handleSelectSlot}
+      />
     </div>
   );
 };
