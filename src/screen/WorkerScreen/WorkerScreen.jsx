@@ -164,7 +164,7 @@ const WorkerScreen = () => {
     setModalMsg(e.title);
   };
   const postHolidayRequest = (date) => {
-    fetch("http://chiragb79.pythonanywhere.com/v1/holidays", {
+    fetch("https://chiragb79.pythonanywhere.com/v1/holidays", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
