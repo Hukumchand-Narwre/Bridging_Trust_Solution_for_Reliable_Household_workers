@@ -14,6 +14,18 @@ Many families encounter challenges when searching for trustworthy domestic help 
 
 URL - https://ap-trading-production.netlify.app/
 
+**Login credentials**
+- **Admin:**
+  Username: test@gmail.com
+  Password: test@123
+- **User:**
+  Username: user@gmail.com
+  Password: 123
+- **Worker:**
+  Username: worker@gmail.com
+  Password: 123 
+
+
 ## Project Summary
 
 In conclusion, web application strives to make hiring household help a trustworthy and hassle-free experience for families. By integrating smart technology, including Deep learning, the web app aims to address the reliability issues associated with household staffing services. Goal is to provide a secure platform where families can easily connect with background-checked workers.
